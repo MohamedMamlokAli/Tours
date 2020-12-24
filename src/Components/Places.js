@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { data } from "./data.js";
 import { reducer } from "./reducer";
 const stateDefault = {
@@ -6,26 +6,40 @@ const stateDefault = {
 };
 const Places = () => {
   const [state, dispatch] = useReducer(reducer, stateDefault);
+
   return (
     <>
-      {state.places.map((place) => {
-        return (
-          <div key={place.id}>
-            <img src={place.img} alt={place.place} />
-            <h4>{place.title}</h4>
-            <p>{place.price}</p>
-            <p>{place.description}</p>
-            <button
-              className="btn"
-              onClick={() =>
-                dispatch({ type: "REMOVE_ITEM", payload: place.id })
-              }
-            >
-              Not interested
+      {state.places.length > 0 ? (
+        state.places.map((place) => {
+          return (
+            <div key={place.id} className="single-tour">
+              <img src={place.img} alt={place.place} />
+              <div className="info">
+                <h4>{place.title}</h4>
+                <h4 className="prices">{place.price}</h4>
+              </div>
+              <p className="description">{place.description}</p>
+              <button
+                className="btn"
+                onClick={() =>
+                  dispatch({ type: "REMOVE_ITEM", payload: place.id })
+                }
+              >
+                Not interested
+              </button>
+            </div>
+          );
+        })
+      ) : (
+        <>
+          <div>
+            <h2>No Tours Left</h2>
+            <button className="btn" onClick={() => window.location.reload()}>
+              Refresh
             </button>
           </div>
-        );
-      })}
+        </>
+      )}
     </>
   );
 };

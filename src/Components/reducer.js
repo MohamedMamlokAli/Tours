@@ -3,6 +3,7 @@ export const reducer = (state, action) => {
     const newPlaces = state.places.filter(
       (place) => place.id !== action.payload
     );
+    console.log(state.places);
     return { ...state, places: newPlaces };
   }
 };
